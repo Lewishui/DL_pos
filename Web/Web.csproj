@@ -70,6 +70,8 @@
     <Content Include="Default.aspx" />
     <Content Include="ErrorPage\ErrorPage.aspx" />
     <Content Include="FileNotFound.html" />
+    <Content Include="frmMain.aspx" />
+    <Content Include="frmNav.aspx" />
     <Content Include="frmReadIDCare.aspx" />
     <Content Include="frmUserManger.aspx" />
     <Content Include="GenericErrorPage.html" />
@@ -381,6 +383,20 @@
     <Compile Include="ErrorPage\ErrorPage.aspx.designer.cs">
       <DependentUpon>ErrorPage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="frmMain.aspx.cs">
+      <DependentUpon>frmMain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmMain.aspx.designer.cs">
+      <DependentUpon>frmMain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmNav.aspx.cs">
+      <DependentUpon>frmNav.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmNav.aspx.designer.cs">
+      <DependentUpon>frmNav.aspx</DependentUpon>
+    </Compile>
     <Compile Include="frmReadIDCare.aspx.cs">
       <DependentUpon>frmReadIDCare.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -484,6 +500,9 @@
     <None Include="副本 Web.Release.config">
       <DependentUpon>副本 Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

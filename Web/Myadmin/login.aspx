@@ -4,7 +4,6 @@
 <head id="Head1" runat="server">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
     <link href="inc/logincss.css" rel="stylesheet" type="text/css" />
     <link href="../../Myadmin/css/common.css" rel="stylesheet" type="text/css" />
     <script language="JavaScript">
@@ -68,7 +67,7 @@
             <div class="lefts">
 
                 <p align="left" class="pname">
-                    <b><span style="font-size: 43pt">证件录入系统</span></b>
+                    <b><span style="font-size: 43pt">POS分销系统</span></b>
                 </p>
             </div>
 
@@ -128,7 +127,7 @@
                                         <%--<asp:Button  name="image" runat="server" type="submit" class="LoginSub" OnClientClick="CheckLogin()" onclick="CheckLogin()" value=" 登 录 " />--%>
                                         <asp:Button ID="image" runat="server" Text=" 登 录 " class="LoginSub" OnClick="HtmlBtn_Click" OnClientClick="CheckLogin()" />
 
-                                        <asp:Button ID="btcreate" runat="server" Text=" 创建账户 " class="LoginSub" OnClick="HtmlBtcreate_Click" Visible="False" />
+                                        <asp:Button ID="btcreate" runat="server" Text=" 找回密码 " class="LoginSub" OnClick="Btchangepas_Click" Visible="true" />
                                         <br>
                                         <br>
 
@@ -142,8 +141,9 @@
                                     <br>
                                     <td height="49"></td>
                                     <td class="auto-style1">
-                                        <asp:Button ID="Btchangepas" runat="server" Text=" 改密 " class="LoginSub" OnClick="Btchangepas_Click" Visible="True" />
+                                      <%--  <asp:Button ID="Btchangepas" runat="server" Text=" 改密 " class="LoginSub" OnClick="Btchangepas_Click" Visible="True" />
                                         <asp:Button ID="frmmain" runat="server" Text=" 主页面 " class="LoginSub" OnClick="Btmain_Click" Visible="False" />
+                                        --%>
                                         <br>
                                         <span style="color: #FF0000;"></span>
 

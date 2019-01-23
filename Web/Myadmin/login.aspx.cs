@@ -94,7 +94,7 @@ namespace Web
             NewMethoduserFind(username.Trim(), txtSAPPassword.Trim());
 
 
-            //  Response.Redirect("~/frmUserManger.aspx");
+            // 
         }
         private bool NewMethoduserFind(string user, string pass)
         {
@@ -109,11 +109,9 @@ namespace Web
 
                 userlist_Server = BusinessHelp.findUser(strSelect.Trim());
 
-
-
                 if (userlist_Server.Count > 0 && userlist_Server[0].Btype == "lock")
                 {
-                    //MessageBox.Show("登录失败,账户已被锁定，请重试或联系系统管理员，谢谢", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    
                     return false;
                 }
                 if (userlist_Server.Count > 0 && userlist_Server[0].password.ToString().Trim() == pass.Trim() && userlist_Server[0].name.ToString().Trim() == user.Trim())
@@ -121,14 +119,14 @@ namespace Web
                     string servename = DropDownList1.SelectedItem.Text;//这是获取选中的文本值
 
                     alterinfo1 = "登录成功";
+                    Response.Redirect("~/frmMain.aspx");
                     if (userlist_Server[0].AdminIS == "true")
                     {
                         btcreate.Visible = true;
 
                         //是否是管理员
                         is_AdminIS = true;
-                    }
-                    frmmain.Visible = true;
+                    }               
 
                     logis++;
                 }
@@ -137,7 +135,7 @@ namespace Web
                     pass = "";
 
                     alterinfo1 = "登录失败，请确认用户名和密码或联系系统管理员，谢谢";
-                    // MessageBox.Show("登录失败，请确认用户名和密码或联系系统管理员，谢谢", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+              
                     return false;
                 }
                 return false;
@@ -146,8 +144,7 @@ namespace Web
             }
             catch (Exception ex)
             {
-                //ProcessLogger.Fatal("0793212:System Login Start " + DateTime.Now.ToString());
-                //MessageBox.Show("登录失败，验证用户信息异常！" + ex, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+          
                 return false; ;
 
                 throw;

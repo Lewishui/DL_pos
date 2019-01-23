@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="frmReadIDCare.aspx.cs" Inherits="Web.frmReadIDCare" %>
 
-<!DOCTYPE html>
+<%--<!DOCTYPE html>--%>
 
 <html xmlns="http://www.w3.org/1999/xhtml" class="trbackcolor">
 <head runat="server">
