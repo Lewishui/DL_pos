@@ -31,8 +31,9 @@
             </a>
         </div>
         <hr />
-        <div class="pageOperation"><a href="/Myadmin/login.aspx" target="_blank">网站首页</a> &nbsp;| &nbsp;<a href="/Myadmin/changepassword.aspx" target="_blank">密码修改</a> &nbsp;| &nbsp;<a href="/Myadmin/logout.aspx">退出登录</a> </div>
- 
+        <%--<div class="pageOperation"><a href="/Myadmin/login.aspx" target="_blank">网站首页</a> &nbsp;| &nbsp;<a href="/Myadmin/changepassword.aspx" target="_blank">密码修改</a> &nbsp;| &nbsp;<a href="/Myadmin/logout.aspx">退出登录</a> </div>--%>
+       <iframe id="ifrMain" name="ifrMain" frameborder="0" scrolling="no" src="/frmNav.aspx" style="height: 21%; visibility: inherit; width: 100%; z-index: 1;"></iframe>
+      
     </div>
     <form id="form1" runat="server">
         <div>

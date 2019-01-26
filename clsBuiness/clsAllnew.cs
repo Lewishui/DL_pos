@@ -1,4 +1,5 @@
 ﻿using China_System.Common;
+using Order.Common;
 using SDZdb;
 using System;
 using System.Collections.Generic;
@@ -217,10 +218,7 @@ namespace clsBuiness
             if (HttpRuntime.Cache.Get("servename") != null)
             {
                 var objCache = HttpRuntime.Cache.Get("servename");
-                //ConStr = System.Web.Configuration.WebConfigurationManager.AppSettings["connectionstring"];
-                //ConStrPIC = System.Web.Configuration.WebConfigurationManager.AppSettings["DbContext"];
-                //server=bds28428944.my3w.com,1433;uid=bds28428944;pwd=Lyh079101;database=bds28428944_db
-                //Provider=SQLOLEDB;server=bds28428944.my3w.com,1433;uid=bds28428944;pwd=Lyh079101;database=bds28428944_db
+
                 ConStr = System.Web.Configuration.WebConfigurationManager.AppSettings[objCache.ToString()];
                 ConStrPIC = ConStr.Replace("Provider=SQLOLEDB;", "");
 
@@ -250,64 +248,52 @@ namespace clsBuiness
             }
 
         }
+      
         public List<clsuserinfo> findUser(string findtext)
         {
-            try
+            //string strSelect = "select * from JNOrder_User where name='" + findtext + "'";
+            MySql.Data.MySqlClient.MySqlDataReader reader = MySqlHelper.ExecuteReader(findtext, ConStr);
+            List<clsuserinfo> ClaimReport_Server = new List<clsuserinfo>();
+
+            while (reader.Read())
             {
-                //  string strSelect = "select * from emw_user where name='" + findtext + "'";
-                OleDbConnection aConnection = new OleDbConnection(ConStr);
+                clsuserinfo item = new clsuserinfo();
+                if (reader.GetValue(0) != null && Convert.ToString(reader.GetValue(0)) != "")
+                    item.Order_id = reader.GetString(0);
+                if (reader.GetValue(1) != null && Convert.ToString(reader.GetValue(1)) != "")
+                    item.name = reader.GetString(1);
+                if (reader.GetValue(2) != null && Convert.ToString(reader.GetValue(2)) != "")
+                    item.password = reader.GetString(2);
+                if (reader.GetValue(3) != null && Convert.ToString(reader.GetValue(3)) != "")
+                    item.Createdate = reader.GetString(3);
+                if (reader.GetValue(4) != null && Convert.ToString(reader.GetValue(4)) != "")
+                    item.Btype = reader.GetString(4);
+                if (reader.GetValue(5) != null && Convert.ToString(reader.GetValue(5)) != "")
+                    item.denglushijian = reader.GetString(5);
+                if (reader.GetValue(6) != null && Convert.ToString(reader.GetValue(6)) != "")
+                    item.jigoudaima = reader.GetString(6);
+ 
 
-                List<clsuserinfo> ClaimReport_Server = new List<clsuserinfo>();
-                if (aConnection.State == ConnectionState.Closed)
-                    aConnection.Open();
+                if (reader.GetValue(7) != null && Convert.ToString(reader.GetValue(7)) != "")
+                    item.userTime = reader.GetString(7);
 
-                OleDbDataAdapter myDataAdapter = new OleDbDataAdapter(findtext, aConnection);
-                OleDbCommandBuilder mybuilder = new OleDbCommandBuilder(myDataAdapter);
-                DataSet ds = new DataSet();
-                myDataAdapter.Fill(ds, "emw_user");
-                foreach (DataRow reader in ds.Tables["emw_user"].Rows)
-                {
-                    clsuserinfo item = new clsuserinfo();
+                if (reader.GetValue(8) != null && Convert.ToString(reader.GetValue(8)) != "")
+                    item.AdminIS = reader.GetString(8);
 
-                    if (reader["_id"].ToString() != "")
-                        item.Order_id = reader["_id"].ToString();
-                    if (reader["name"].ToString() != "")
-                        item.name = reader["name"].ToString();
-                    if (reader["password"].ToString() != "")
-                        item.password = reader["password"].ToString();
-                    if (reader["Createdate"].ToString() != "")
-                        item.Createdate = reader["Createdate"].ToString();
-                    if (reader["Btype"].ToString() != "")
-                        item.Btype = reader["Btype"].ToString();
+                if (reader.GetValue(9) != null && Convert.ToString(reader.GetValue(9)) != "")
+                    item.Input_Date = reader.GetString(9);
 
-                    if (reader["denglushijian"].ToString() != "")
-                        item.denglushijian = reader["denglushijian"].ToString();
-                    if (reader["jigoudaima"].ToString() != "")
-                        item.jigoudaima = reader["jigoudaima"].ToString();
-                    if (reader["userTime"].ToString() != "")
-                        item.userTime = reader["userTime"].ToString();
+                if (reader.GetValue(10) != null && Convert.ToString(reader.GetValue(10)) != "")
+                    item.mibao = reader.GetString(10);
 
-                    if (reader["AdminIS"].ToString() != "")
-                        item.AdminIS = reader["AdminIS"].ToString();
-                    if (reader["mibao"].ToString() != "")
-                        item.mibao = reader["mibao"].ToString();
+                ClaimReport_Server.Add(item);
 
-
-                    ClaimReport_Server.Add(item);
-
-                    //这里做数据处理....
-                }
-                return ClaimReport_Server;
-
+                //这里做数据处理....
             }
-            catch (Exception ex)
-            {
-                //  inputlog(ex.Message + "//" + ex.Source + "//" + ex.StackTrace);
-                HttpContext.Current.Response.Redirect("~/ErrorPage/ErrorPage.aspx?Error=" + "无法与服务器建立连接，请确保数据库配置或网络畅通！");
+            return ClaimReport_Server;
 
-                throw ex;
-            }
         }
+
         private static void inputlog(string aainput)
         {
             string A_Path = AppDomain.CurrentDomain.BaseDirectory + "bin\\log.txt";
@@ -319,119 +305,70 @@ namespace clsBuiness
         public void createUser_Server(List<clsuserinfo> AddMAPResult)
         {
 
-
-
-
-            //创建连接对象
-            bool isok = false;
-            OleDbConnection con = new OleDbConnection(ConStr);
-            try
+            foreach (clsuserinfo item in AddMAPResult)
             {
-                if (con.State == ConnectionState.Closed)
-                    con.Open();
-                //命令
-                foreach (clsuserinfo item in AddMAPResult)
-                {
+                string sql = "";
+                sql = "insert into _user(name,password,Createdate,Btype,denglushijian,jigoudaima,userTime,AdminIS,mibao) values ('" + item.name + "','" + item.password + "',N'" + item.Createdate + "','" + item.Btype + "','" + item.denglushijian + "','" + item.jigoudaima + "','" + item.userTime + "','" + item.AdminIS + "','" + item.mibao + "')";
 
-                    string sql = "";
-                    sql = "insert into emw_user(name,password,Createdate,Btype,denglushijian,jigoudaima,userTime,AdminIS,mibao) values ('" + item.name + "','" + item.password + "',N'" + item.Createdate + "','" + item.Btype + "','" + item.denglushijian + "','" + item.jigoudaima + "','" + item.userTime + "','" + item.AdminIS + "','" + item.mibao + "')";
+                int isrun = MySqlHelper.ExecuteSql(sql, ConStr);
 
-                    OleDbCommand cmd = new OleDbCommand(sql, con);
-                    cmd.ExecuteNonQuery();
-                    isok = true;
-
-                }
-                //con.Close();
-                return;
+             
             }
-            catch (Exception ex)
-            {
-                if (con.State == ConnectionState.Open) con.Close();
-                if (con != null)
-                    con.Dispose();
-                return;
-
-                throw;
-            }
-            finally { if (con.State == ConnectionState.Open) con.Close(); con.Dispose(); }
-        }
+            return; 
+        }     
         public List<clsuserinfo> ReadUserlistfromServer()
         {
-            string conditions = "select * from emw_user";//成功
-
-            OleDbConnection aConnection = new OleDbConnection(ConStr);
-
+            string conditions = "select * from _user";//成功
+            MySql.Data.MySqlClient.MySqlDataReader reader = MySqlHelper.ExecuteReader(conditions, ConStr);
             List<clsuserinfo> ClaimReport_Server = new List<clsuserinfo>();
-            if (aConnection.State == ConnectionState.Closed)
-                aConnection.Open();
 
-            OleDbDataAdapter myDataAdapter = new OleDbDataAdapter(conditions, aConnection);
-            OleDbCommandBuilder mybuilder = new OleDbCommandBuilder(myDataAdapter);
-            DataSet ds = new DataSet();
-            myDataAdapter.Fill(ds, "emw_user");
-            foreach (DataRow reader in ds.Tables["emw_user"].Rows)
+            while (reader.Read())
             {
                 clsuserinfo item = new clsuserinfo();
 
-                if (reader["_id"].ToString() != "")
-                    item.Order_id = reader["_id"].ToString();
-                if (reader["name"].ToString() != "")
-                    item.name = reader["name"].ToString();
-                if (reader["password"].ToString() != "")
-                    item.password = reader["password"].ToString();
-                if (reader["Createdate"].ToString() != "")
-                    item.Createdate = reader["Createdate"].ToString();
-                if (reader["Btype"].ToString() != "")
-                    item.Btype = reader["Btype"].ToString();
+                if (reader.GetValue(0) != null && Convert.ToString(reader.GetValue(0)) != "")
+                    item.Order_id = reader.GetString(0);
+                if (reader.GetValue(1) != null && Convert.ToString(reader.GetValue(1)) != "")
+                    item.name = reader.GetString(1);
+                if (reader.GetValue(2) != null && Convert.ToString(reader.GetValue(2)) != "")
+                    item.password = reader.GetString(2);
+                if (reader.GetValue(3) != null && Convert.ToString(reader.GetValue(3)) != "")
+                    item.Createdate = reader.GetString(3);
+                if (reader.GetValue(4) != null && Convert.ToString(reader.GetValue(4)) != "")
+                    item.Btype = reader.GetString(4);
+                if (reader.GetValue(5) != null && Convert.ToString(reader.GetValue(5)) != "")
+                    item.denglushijian = reader.GetString(5);
+                if (reader.GetValue(6) != null && Convert.ToString(reader.GetValue(6)) != "")
+                    item.jigoudaima = reader.GetString(6);
 
-                if (reader["denglushijian"].ToString() != "")
-                    item.denglushijian = reader["denglushijian"].ToString();
-                if (reader["jigoudaima"].ToString() != "")
-                    item.jigoudaima = reader["jigoudaima"].ToString();
-                if (reader["userTime"].ToString() != "")
-                    item.userTime = reader["userTime"].ToString();
+                if (reader.GetValue(7) != null && Convert.ToString(reader.GetValue(7)) != "")
+                    item.userTime = reader.GetString(7);
 
-                if (reader["AdminIS"].ToString() != "")
-                    item.AdminIS = reader["AdminIS"].ToString();
+                if (reader.GetValue(8) != null && Convert.ToString(reader.GetValue(8)) != "")
+                    item.AdminIS = reader.GetString(8);
 
-                if (reader["mibao"].ToString() != "")
-                    item.mibao = reader["mibao"].ToString();
+                if (reader.GetValue(9) != null && Convert.ToString(reader.GetValue(9)) != "")
+                    item.Input_Date = reader.GetString(9);
+
+                if (reader.GetValue(10) != null && Convert.ToString(reader.GetValue(10)) != "")
+                    item.mibao = reader.GetString(10);
+
 
                 ClaimReport_Server.Add(item);
 
                 //这里做数据处理....
             }
             return ClaimReport_Server;
-
+          
         }
-        public bool deleteUSER(string name)
+ 
+        public void deleteUSER(string name)
         {
+            string sql2 = "delete from _user where  name='" + name + "'";
+            int isrun = MySqlHelper.ExecuteSql(sql2, ConStr);
 
-
-
-            OleDbConnection con = new OleDbConnection(ConStr);
-            try
-            {
-                if (con.State == ConnectionState.Closed)
-                    con.Open();
-                string sql2 = "delete from emw_user where   name='" + name + "'";
-
-                OleDbCommand cmd = new OleDbCommand(sql2, con);
-                cmd.ExecuteNonQuery();
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                if (con.State == ConnectionState.Open) con.Close();
-                if (con != null)
-                    con.Dispose();
-                return false;
-
-                throw;
-            }
-            finally { if (con.State == ConnectionState.Open) con.Close(); con.Dispose(); }
-
+            return;
+       
         }
         public bool changeUserpassword_Server(List<clsuserinfo> AddMAPResult)
         {
@@ -755,7 +692,7 @@ namespace clsBuiness
                 {
 
                     string sql = "";
-                    sql = "insert into t_Item(FItemID,FItemClassID,FExternID,FNumber,FParentID,FLevel,FDetail,FName,FUnUsed,FBrNo,FFullNumber,FDiff,FDeleted,FShortNumber,FFullName,FGRCommonID,FSystemType,FUseSign,FAccessory,FGrControl,FHavePicture) values ('" + item.FItemID + "','" + item.FItemClassID + "',N'" + item.FExternID + "',N'" + item.FNumber + "','" + item.FParentID + "','" + item.FLevel + "','" + item.FDetail + "','" + item.FName + "','" + item.FUnUsed + "','" + item.FBrNo + "','" + item.FFullNumber + "','" + item.FDiff + "','" + item.FDeleted + "','" + item.FShortNumber + "','" + item.FFullName + "','" + item.FGRCommonID + "','" + item.FSystemType + "','" + item.FUseSign + "','" + item.FAccessory + "','" + item.FGrControl  + "','" + item.FHavePicture + "')";
+                    sql = "insert into t_Item(FItemID,FItemClassID,FExternID,FNumber,FParentID,FLevel,FDetail,FName,FUnUsed,FBrNo,FFullNumber,FDiff,FDeleted,FShortNumber,FFullName,FGRCommonID,FSystemType,FUseSign,FAccessory,FGrControl,FHavePicture) values ('" + item.FItemID + "','" + item.FItemClassID + "',N'" + item.FExternID + "',N'" + item.FNumber + "','" + item.FParentID + "','" + item.FLevel + "','" + item.FDetail + "','" + item.FName + "','" + item.FUnUsed + "','" + item.FBrNo + "','" + item.FFullNumber + "','" + item.FDiff + "','" + item.FDeleted + "','" + item.FShortNumber + "','" + item.FFullName + "','" + item.FGRCommonID + "','" + item.FSystemType + "','" + item.FUseSign + "','" + item.FAccessory + "','" + item.FGrControl + "','" + item.FHavePicture + "')";
 
                     OleDbCommand cmd = new OleDbCommand(sql, con);
                     cmd.ExecuteNonQuery();
@@ -1058,7 +995,7 @@ namespace clsBuiness
             }
             catch (Exception ex)
             {
-                HttpContext.Current.Response.Redirect("~/ErrorPage/ErrorPage.aspx?Error=" +"网络访问较慢或网络不通无法访问 ："+ ex.ToString());
+                HttpContext.Current.Response.Redirect("~/ErrorPage/ErrorPage.aspx?Error=" + "网络访问较慢或网络不通无法访问 ：" + ex.ToString());
 
                 // inputlog(ex.Message + "//" + ex.Source + "//" + ex.StackTrace);
 

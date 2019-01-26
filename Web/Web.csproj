@@ -76,6 +76,9 @@
     <Content Include="frmUserManger.aspx" />
     <Content Include="GenericErrorPage.html" />
     <Content Include="Global.asax" />
+    <Content Include="Images\style.css" />
+    <Content Include="Images\uploadify.css" />
+    <Content Include="ImportData.aspx" />
     <Content Include="Myadmin\logout.aspx" />
     <Content Include="Myadmin\changepassword.aspx" />
     <Content Include="Myadmin\js\jquery-1.7.1.min.js" />
@@ -354,6 +357,7 @@
     <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.4.1.js" />
     <Content Include="Scripts\jquery-1.4.1.min.js" />
+    <Content Include="statelist.asp" />
     <Content Include="ViewImage.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -414,6 +418,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="ImportData.aspx.cs">
+      <DependentUpon>ImportData.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ImportData.aspx.designer.cs">
+      <DependentUpon>ImportData.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Myadmin\logout.aspx.cs">
       <DependentUpon>logout.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -457,6 +468,13 @@
     <Compile Include="WebForm2.aspx.designer.cs">
       <DependentUpon>WebForm2.aspx</DependentUpon>
     </Compile>
+    <Compile Include="yejiguanli.aspx.cs">
+      <DependentUpon>yejiguanli.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="yejiguanli.aspx.designer.cs">
+      <DependentUpon>yejiguanli.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -486,6 +504,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="yejiguanli.aspx" />
     <Content Include="副本 Web.config">
       <SubType>Designer</SubType>
     </Content>

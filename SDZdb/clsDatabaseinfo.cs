@@ -18,6 +18,7 @@ namespace SDZdb
         public string jigoudaima { get; set; }
         public string userTime { get; set; }
         public string mibao { get; set; }
+        public string Input_Date { get; set; }
 
     }
     public class clCard_info
@@ -82,7 +83,7 @@ namespace SDZdb
         public string FGrControl { get; set; }
         public DateTime FModifyTime { get; set; }
         public string FHavePicture { get; set; }
-      
+
 
 
 

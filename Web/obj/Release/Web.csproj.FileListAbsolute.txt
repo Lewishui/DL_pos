@@ -28,3 +28,4 @@ D:\Devlop\DL_pos\DL_pos\Web\bin\SDZdb.pdb
 D:\Devlop\DL_pos\DL_pos\Web\obj\Release\Web.csprojResolveAssemblyReference.cache
 D:\Devlop\DL_pos\DL_pos\Web\obj\Release\Web.dll
 D:\Devlop\DL_pos\DL_pos\Web\obj\Release\Web.pdb
+D:\Devlop\DL_pos\DL_pos\Web\bin\MySql.Data.dll

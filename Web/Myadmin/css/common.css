@@ -675,11 +675,11 @@ table.gridview_m {
     color: #b40605;
 }
 
-.app_table {
+/*.app_table {
     border: 1px solid #ddd;
     border-collapse: collapse;
     padding: 3px;
-    width: 790px;
+    width: 190px;
     margin-bottom: 20px;
 }
 
@@ -689,9 +689,29 @@ table.gridview_m {
     background-color: #fff;
     padding: 20px 0 20px 20px;
     border-collapse: collapse;
+    float:left;
 }
 
+.main {
+    width: 100%;
+}
+
+.mainCon {
+    width: 960px;
+    margin: auto;
+    border-collapse: collapse;
+}
 .leftNav {
+    float: left;
+    width: 10%;
+    margin: 20px 0 80px 0;
+    padding: 10px 0 10px 0;
+    border: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-collapse: collapse;
+    float:left;
+}*/
+/*.sidebar-menu {
     float: left;
     width: 140px;
     margin: 20px 0 80px 0;
@@ -699,9 +719,11 @@ table.gridview_m {
     border: 1px solid #ccc;
     border-left: 1px solid #ccc;
     border-collapse: collapse;
-}
+}*/
 
-.leftNav_li {
+
+
+/*.leftNav_li {
     display: block;
     height: 28px;
     font-size: 14px;
@@ -796,14 +818,48 @@ table.gridview_m {
     height: 1px;
     background: #ccc;
     margin: 10px 10px 10px 10px;
-}
+}*/
 
-.main {
+.headerlist {
+    color: #0099CC;
+    height: 38px;
     width: 100%;
+    background-color: #0099CC;
+    /*padding: 0 0 0 155px;*/
 }
 
-.mainCon {
-    width: 960px;
-    margin: auto;
-    border-collapse: collapse;
+.buttonheader {
+    font-family: "Arail", "Î¢ÈíÑÅºÚ";
+    font-size: 12pt;
+    color: #ffffff;
+    border: 0px #93bee2 solid;
+    /*background-image:url(<img src="./imege/button-³£Ì¬.png" />);*/
+    background-color: #0099CC;
+    width: 120px;
+    height: 34px;
+    border-radius: 3px;
+    CURSOR: hand;
+    font-style: normal;
+}
+
+.upload_tr {
+    padding-left: 200px;
+    padding-right: 0px;
+    font-size: 18pt;
+    margin: 0 auto;
+    /*padding: 0 0 0 0px;*/
+}
+.upload_tr1 {
+    padding-left:  0px;
+    padding-right: 0px;
+    font-size: 18pt;
+    margin: 0 auto;
+    /*padding: 0 0 0 0px;*/
+}
+.upload_bt {
+    padding-left:  310px;
+    padding-right: 0px;
+    font-size: 18pt;
+    /*margin: 0 auto;*/
+    /*padding: 0 0 0 0px;*/
 }

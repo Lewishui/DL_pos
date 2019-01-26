@@ -27,7 +27,8 @@ namespace Web
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            bind();
+            //bind();
+            InitialSystemInfo();
         }
         public class SortableBindingList<T> : BindingList<T>
         {

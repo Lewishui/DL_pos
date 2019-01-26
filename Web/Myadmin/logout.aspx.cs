@@ -22,6 +22,7 @@ namespace Web
             //Session["name"] = null;
             ClearClientPageCache();
             Response.Redirect("login.aspx");
+         
         }
         public void ClearClientPageCache()
         {
