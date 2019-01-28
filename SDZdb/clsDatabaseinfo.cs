@@ -83,10 +83,28 @@ namespace SDZdb
         public string FGrControl { get; set; }
         public DateTime FModifyTime { get; set; }
         public string FHavePicture { get; set; }
+    }
 
-
-
-
-
+    public class clt_POS_info
+    {
+        public string Order_id { get; set; }//=FItemID
+        public string shangpinbianhao { get; set; }
+        public string zhucemingcheng { get; set; }
+        public string jingyingmingcheng { get; set; }
+        public string suoshujigou { get; set; }
+        public string jiaoyileixing { get; set; }
+        public string jiaoyizhuangtai { get; set; }
+        public string jiaoyijine { get; set; }
+        public string jiaoyishouxufei { get; set; }
+        public string jiaoyifujiashouxufei { get; set; }
+        public string jiaoyishijian { get; set; }
+        public string jiansuocankaohao { get; set; }
+        public string Input_Date { get; set; }
+        public string mark1 { get; set; }
+        public string mark2 { get; set; }
+        public string mark3 { get; set; }
+        public string mark4 { get; set; }
+        public string mark5 { get; set; }
+     
     }
 }

@@ -12,6 +12,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -248,7 +249,8 @@ namespace clsBuiness
             }
 
         }
-      
+
+       
         public List<clsuserinfo> findUser(string findtext)
         {
             //string strSelect = "select * from JNOrder_User where name='" + findtext + "'";
@@ -272,7 +274,7 @@ namespace clsBuiness
                     item.denglushijian = reader.GetString(5);
                 if (reader.GetValue(6) != null && Convert.ToString(reader.GetValue(6)) != "")
                     item.jigoudaima = reader.GetString(6);
- 
+
 
                 if (reader.GetValue(7) != null && Convert.ToString(reader.GetValue(7)) != "")
                     item.userTime = reader.GetString(7);
@@ -312,10 +314,10 @@ namespace clsBuiness
 
                 int isrun = MySqlHelper.ExecuteSql(sql, ConStr);
 
-             
+
             }
-            return; 
-        }     
+            return;
+        }
         public List<clsuserinfo> ReadUserlistfromServer()
         {
             string conditions = "select * from _user";//成功
@@ -359,16 +361,16 @@ namespace clsBuiness
                 //这里做数据处理....
             }
             return ClaimReport_Server;
-          
+
         }
- 
+
         public void deleteUSER(string name)
         {
             string sql2 = "delete from _user where  name='" + name + "'";
             int isrun = MySqlHelper.ExecuteSql(sql2, ConStr);
 
             return;
-       
+
         }
         public bool changeUserpassword_Server(List<clsuserinfo> AddMAPResult)
         {
@@ -1120,7 +1122,201 @@ namespace clsBuiness
 
         #endregion
 
+        public List<clt_POS_info> HandingChargeKEY(string ZFCEPath)
+        {
 
+
+            List<clt_POS_info> KEYResult = GetHandingChargenfo(ZFCEPath);
+
+
+
+            return KEYResult;
+
+        }
+        public List<clt_POS_info> GetHandingChargenfo(string Alist)
+        {
+
+            List<clt_POS_info> MAPPINGResult = new List<clt_POS_info>();
+            try
+            {
+                List<clt_POS_info> WANGYINResult = new List<clt_POS_info>();
+                System.Globalization.CultureInfo CurrentCI = System.Threading.Thread.CurrentThread.CurrentCulture;
+                System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+                Microsoft.Office.Interop.Excel.Application excelApp;
+                {
+                    string path = Alist;
+                    excelApp = new Microsoft.Office.Interop.Excel.Application();
+                    Microsoft.Office.Interop.Excel.Workbook analyWK = excelApp.Workbooks.Open(path, Type.Missing, Type.Missing, Type.Missing,
+                        "htc", Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+                        Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+
+                    Microsoft.Office.Interop.Excel.Worksheet WS = (Microsoft.Office.Interop.Excel.Worksheet)analyWK.Worksheets[1];
+                    Microsoft.Office.Interop.Excel.Range rng;
+                    // rng = WS.Range[WS.Cells[1, 1], WS.Cells[WS.UsedRange.Rows.Count, 16]];
+                    //rng = WS.get_Range(WS.Cells[1, 1], WS.Cells[WS.UsedRange.Rows.Count, 30]);
+                    rng = WS.Range[WS.Cells[2, 1], WS.Cells[WS.UsedRange.Rows.Count, 30]];
+                    int rowCount = WS.UsedRange.Rows.Count - 1;
+                    object[,] o = new object[1, 1];
+                    o = (object[,])rng.Value2;
+                    int wscount = analyWK.Worksheets.Count;
+                    clsCommHelp.CloseExcel(excelApp, analyWK);
+
+                    for (int i = 1; i <= rowCount; i++)
+                    {
+                        clt_POS_info temp = new clt_POS_info();
+
+                        #region 基础信息
+
+                        temp.shangpinbianhao = "";
+                        if (o[i, 1] != null)
+                            temp.shangpinbianhao = o[i, 1].ToString().Trim();
+
+                        temp.zhucemingcheng = "";
+                        if (o[i, 2] != null)
+                            temp.zhucemingcheng = o[i, 2].ToString().Trim();
+
+
+                        temp.jingyingmingcheng = "";
+                        if (o[i, 3] != null)
+                            temp.jingyingmingcheng = o[i, 3].ToString().Trim();
+
+                        //卖场代码
+
+                        temp.suoshujigou = "";
+                        if (o[i, 4] != null)
+                            temp.suoshujigou = o[i, 4].ToString().Trim();
+                        if (temp.suoshujigou == null || temp.suoshujigou == "")
+                            continue;
+
+                        temp.jiaoyileixing = "";
+                        if (o[i, 5] != null)
+                            temp.jiaoyileixing = o[i, 5].ToString().Trim();
+
+                        temp.jiaoyizhuangtai = "";
+                        if (o[i, 6] != null)
+                            temp.jiaoyizhuangtai = o[i, 6].ToString().Trim();
+                        temp.jiaoyijine = "";
+                        if (o[i, 7] != null)
+                            temp.jiaoyijine = o[i, 7].ToString().Trim();
+
+                        temp.jiaoyishouxufei = "";
+                        if (o[i, 8] != null)
+                            temp.jiaoyishouxufei = o[i, 8].ToString().Trim();
+
+                        //卖场名称
+                        temp.jiaoyifujiashouxufei = "";
+                        if (o[i, 9] != null)
+                            temp.jiaoyifujiashouxufei = o[i, 9].ToString().Trim();
+
+                        temp.jiaoyishijian = "";
+                        if (o[i, 10] != null)
+                            temp.jiaoyishijian = o[i, 10].ToString().Trim();
+
+                        temp.jiansuocankaohao = "";
+                        if (o[i, 11] != null)
+                            temp.jiansuocankaohao = o[i, 11].ToString().Trim();
+                        //
+
+                        temp.Input_Date = DateTime.Now.ToString("yyyy/MM/dd");
+
+                        #endregion
+                        MAPPINGResult.Add(temp);
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: 01032" + ex);
+                return null;
+
+                throw;
+            }
+            return MAPPINGResult;
+
+        }
+        public void createPOS_Server(List<clt_POS_info> AddMAPResult)
+        {
+
+            try
+            {
+                foreach (clt_POS_info item in AddMAPResult)
+                {
+                    string sql = "";
+                    sql = "insert into pos_detail(shangpinbianhao,zhucemingcheng,jingyingmingcheng,suoshujigou,jiaoyileixing,jiaoyizhuangtai,jiaoyijine,jiaoyishouxufei,jiaoyifujiashouxufei,jiaoyishijian,jiansuocankaohao,Input_Date,mark1,mark2,mark3,mark4,mark5) values ('" + item.shangpinbianhao + "','" + item.zhucemingcheng + "','" + item.jingyingmingcheng + "','" + item.suoshujigou + "','" + item.jiaoyileixing + "','" + item.jiaoyizhuangtai + "','" + item.jiaoyijine + "','" + item.jiaoyishouxufei + "','" + item.jiaoyifujiashouxufei + "','" + item.jiaoyishijian + "','" + item.jiansuocankaohao + "','" + item.Input_Date + "','" + item.mark1 + "','" + item.mark2 + "','" + item.mark3 + "','" + item.mark4 + "','" + item.mark5 + "')";
+
+                    int isrun = MySqlHelper.ExecuteSql(sql, ConStr);
+
+
+                }
+                return;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+        public List<clt_POS_info> ReadPOSServer(string conditions)
+        {
+       
+            MySql.Data.MySqlClient.MySqlDataReader reader = MySqlHelper.ExecuteReader(conditions, ConStr);
+            List<clt_POS_info> ClaimReport_Server = new List<clt_POS_info>();
+
+            while (reader.Read())
+            {
+                clt_POS_info item = new clt_POS_info();
+
+                if (reader.GetValue(0) != null && Convert.ToString(reader.GetValue(0)) != "")
+                    item.Order_id = reader.GetString(0);
+                if (reader.GetValue(1) != null && Convert.ToString(reader.GetValue(1)) != "")
+                    item.shangpinbianhao = reader.GetString(1);
+                if (reader.GetValue(2) != null && Convert.ToString(reader.GetValue(2)) != "")
+                    item.zhucemingcheng = reader.GetString(2);
+                if (reader.GetValue(3) != null && Convert.ToString(reader.GetValue(3)) != "")
+                    item.jingyingmingcheng = reader.GetString(3);
+                if (reader.GetValue(4) != null && Convert.ToString(reader.GetValue(4)) != "")
+                    item.suoshujigou = reader.GetString(4);
+                if (reader.GetValue(5) != null && Convert.ToString(reader.GetValue(5)) != "")
+                    item.jiaoyileixing = reader.GetString(5);
+                if (reader.GetValue(6) != null && Convert.ToString(reader.GetValue(6)) != "")
+                    item.jiaoyizhuangtai = reader.GetString(6);
+
+                if (reader.GetValue(7) != null && Convert.ToString(reader.GetValue(7)) != "")
+                    item.jiaoyijine = reader.GetString(7);
+
+                if (reader.GetValue(8) != null && Convert.ToString(reader.GetValue(8)) != "")
+                    item.jiaoyishouxufei = reader.GetString(8);
+
+                if (reader.GetValue(9) != null && Convert.ToString(reader.GetValue(9)) != "")
+                    item.jiaoyifujiashouxufei = reader.GetString(9);
+
+                if (reader.GetValue(10) != null && Convert.ToString(reader.GetValue(10)) != "")
+                    item.jiaoyishijian = reader.GetString(10);
+
+                if (reader.GetValue(11) != null && Convert.ToString(reader.GetValue(11)) != "")
+                    item.jiansuocankaohao = reader.GetString(11);
+                if (reader.GetValue(12) != null && Convert.ToString(reader.GetValue(12)) != "")
+                    item.Input_Date = reader.GetString(12);
+                if (reader.GetValue(13) != null && Convert.ToString(reader.GetValue(13)) != "")
+                    item.mark1 = reader.GetString(13);
+                if (reader.GetValue(14) != null && Convert.ToString(reader.GetValue(14)) != "")
+                    item.mark2 = reader.GetString(14);
+                if (reader.GetValue(15) != null && Convert.ToString(reader.GetValue(15)) != "")
+                    item.mark3 = reader.GetString(15);
+                if (reader.GetValue(16) != null && Convert.ToString(reader.GetValue(16)) != "")
+                    item.mark4 = reader.GetString(16);
+                if (reader.GetValue(17) != null && Convert.ToString(reader.GetValue(17)) != "")
+                    item.mark5 = reader.GetString(17);
+
+                ClaimReport_Server.Add(item);
+
+                //这里做数据处理....
+            }
+            return ClaimReport_Server;
+
+        }
 
     }
 }

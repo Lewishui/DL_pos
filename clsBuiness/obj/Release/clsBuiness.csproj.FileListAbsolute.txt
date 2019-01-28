@@ -18,3 +18,4 @@ D:\Devlop\DL_pos\DL_pos\clsBuiness\obj\Release\clsBuiness.dll
 D:\Devlop\DL_pos\DL_pos\clsBuiness\obj\Release\clsBuiness.pdb
 D:\Devlop\DL_pos\DL_pos\clsBuiness\bin\Release\MySql.Data.dll
 D:\Devlop\DL_pos\DL_pos\clsBuiness\bin\Release\MySql.Data.Entity.dll
+D:\Devlop\DL_pos\DL_pos\clsBuiness\bin\Release\log4net.dll
