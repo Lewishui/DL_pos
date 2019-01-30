@@ -46,7 +46,7 @@
                 <table cellpadding="0" cellspacing="0" border="0" width="100%" class="ui-table">
                     <tbody>
                         <tr>
-                            <th class="textfield1">所属机构*</th>
+                            <th class="textfield1">上级机构*</th>
                             <td>
                                 <asp:TextBox ID="comboBox1" runat="server" class="textfield"></asp:TextBox>
                             </td>

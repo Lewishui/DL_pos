@@ -100,7 +100,6 @@
 
                             <HeaderStyle BackColor="#EDEDED" Height="26px" />
                             <Columns>
-
                                 <asp:BoundField HeaderText="商户编号" DataField="shangpinbianhao">
                                     <%--dengluzhanghao--%>
                                     <%--<FooterStyle HorizontalAlign="Left" />--%>
@@ -175,7 +174,6 @@
                                 <asp:ButtonField ButtonType="Button" Text="查看" HeaderText="查看图片" CommandName="Btn_View">
                                     <ControlStyle Width="50px" />
                                     <ItemStyle HorizontalAlign="Center"></ItemStyle>
-
                                 </asp:ButtonField>
 
                             </Columns>

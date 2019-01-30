@@ -32,9 +32,11 @@
     <script type="text/javascript">
         function changeurl() {
             //alert(sds0)
-            window.parent.document.getElementById("Iframe1").src = "ImportData.aspx";
-
-                
+            window.parent.document.getElementById("Iframe1").src = "ImportData.aspx";                
+        }
+        function yejichangeurl() {
+            //alert(sds0)
+            window.parent.document.getElementById("Iframe1").src = "yejiguanli.aspx";
         }
     </script>
 </head>
@@ -121,7 +123,7 @@
                     <ul>
                         <li><a id="Nav_begin" class="leftNav_li" href="senior.asp">信息导航</a></li>
                         <li><span class="leftNav_block"></span></li>
-                        <li><a href="senior.asp#Nav_profile_basic" class="leftNav_li">业绩管理</a></li>
+                        <li><a href="#" class="leftNav_li" onclick="yejichangeurl()">业绩管理</a></li>
                         <li><a href="statelist.asp#Nav_profile_image" class="leftNav_li">团队管理</a></li>
                         <li><a href="UserPassUp.asp" class="leftNav_li">商户管理</a></li>
                         <li><a href="UserPassUp.asp" class="leftNav_li">分润中心</a></li>
@@ -133,7 +135,7 @@
                 <div class="rightContentfrmain">
                     <!--start -->
                     <!--startprint-->
-                      <iframe id="Iframe1" name="ifrMain" frameborder="0" scrolling="no" src="/yejiguanli.aspx" style="height: 100%; visibility: inherit; width: 100%; z-index: 1;"></iframe>
+                      <iframe id="Iframe1" name="ifrMain" frameborder="0" scrolling="yes" src="/yejiguanli.aspx" style="height: 100%; visibility: inherit; width: 100%; z-index: 1;"></iframe>
       
 
                <%--     <table id="Nav_profile_whish" class="app_table">

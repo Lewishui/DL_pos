@@ -19,6 +19,7 @@ namespace SDZdb
         public string userTime { get; set; }
         public string mibao { get; set; }
         public string Input_Date { get; set; }
+        public string xiajilist { get; set; }
 
     }
     public class clCard_info

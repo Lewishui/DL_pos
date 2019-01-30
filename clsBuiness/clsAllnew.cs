@@ -250,7 +250,7 @@ namespace clsBuiness
 
         }
 
-       
+
         public List<clsuserinfo> findUser(string findtext)
         {
             //string strSelect = "select * from JNOrder_User where name='" + findtext + "'";
@@ -288,6 +288,11 @@ namespace clsBuiness
                 if (reader.GetValue(10) != null && Convert.ToString(reader.GetValue(10)) != "")
                     item.mibao = reader.GetString(10);
 
+                if (reader.GetValue(11) != null && Convert.ToString(reader.GetValue(11)) != "")
+                    item.xiajilist = reader.GetString(11);
+
+
+
                 ClaimReport_Server.Add(item);
 
                 //这里做数据处理....
@@ -311,6 +316,18 @@ namespace clsBuiness
             {
                 string sql = "";
                 sql = "insert into _user(name,password,Createdate,Btype,denglushijian,jigoudaima,userTime,AdminIS,mibao) values ('" + item.name + "','" + item.password + "',N'" + item.Createdate + "','" + item.Btype + "','" + item.denglushijian + "','" + item.jigoudaima + "','" + item.userTime + "','" + item.AdminIS + "','" + item.mibao + "')";
+
+                int isrun = MySqlHelper.ExecuteSql(sql, ConStr);
+
+
+            }
+            return;
+        }
+        public void Update_User_Server(string sql)
+        {
+
+
+            {
 
                 int isrun = MySqlHelper.ExecuteSql(sql, ConStr);
 
@@ -1260,7 +1277,7 @@ namespace clsBuiness
         }
         public List<clt_POS_info> ReadPOSServer(string conditions)
         {
-       
+
             MySql.Data.MySqlClient.MySqlDataReader reader = MySqlHelper.ExecuteReader(conditions, ConStr);
             List<clt_POS_info> ClaimReport_Server = new List<clt_POS_info>();
 

@@ -193,6 +193,36 @@ namespace Web
 
             userlist_Server.Add(item);
             clsAllnew BusinessHelp = new clsAllnew();
+            string findup_name = "";
+
+            findup_name = item.jigoudaima;
+
+
+            while (true)
+            {
+                List<clsuserinfo> Finduserlist_Server = new List<clsuserinfo>();
+                string strSelect = "select * from _user where name='" + findup_name + "'";
+
+                Finduserlist_Server = BusinessHelp.findUser(strSelect.Trim());
+
+                //绑定上级
+                if (Finduserlist_Server.Count > 0)
+                {
+                    Finduserlist_Server[0].xiajilist = Finduserlist_Server[0].xiajilist + " " + item.name;
+
+                    //更新上级信息
+                    string conditions = "update _user set  " + " xiajilist ='" + Finduserlist_Server[0].xiajilist + "'" + " where _id = " + Finduserlist_Server[0].Order_id + " ";
+
+                    BusinessHelp.Update_User_Server(conditions);
+
+                    findup_name = Finduserlist_Server[0].jigoudaima;
+                }
+                else
+                    break;
+
+
+            }
+
 
             BusinessHelp.createUser_Server(userlist_Server);
             alterinfo = "创建用户成功！";
@@ -229,7 +259,7 @@ namespace Web
                 InitialSystemInfo();
             }
         }
-       
+
 
 
     }
