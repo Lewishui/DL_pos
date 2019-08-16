@@ -46,7 +46,7 @@ namespace Web
 
                 HttpCookie cookie1 = Request.Cookies["MyCook"];
 
-                if (cookie1 != null && cookie1["servename"].ToString() != "")
+                if (cookie1 != null &&cookie1["servename"]!=null&& cookie1["servename"].ToString() != "")
                 {
 
                     DropDownList1.SelectedItem.Text = HttpUtility.UrlDecode(cookie1["servename"].ToString());
